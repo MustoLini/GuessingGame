@@ -1,16 +1,21 @@
 package com.example.guessinggame;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Person {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double guesses;
+    private String name;
+
+    @OneToMany
+    private List<Result> result;
+
 
     public void setId(Long id) {
         this.id = id;
@@ -20,11 +25,4 @@ public class Person {
         return id;
     }
 
-    public void setGuesses(double guesses) {
-        this.guesses = guesses;
-    }
-
-    public double getGuesses() {
-        return guesses;
-    }
 }
