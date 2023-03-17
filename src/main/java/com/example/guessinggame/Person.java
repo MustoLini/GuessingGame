@@ -15,6 +15,9 @@ public class Person {
     private String name;
     @OneToMany
     private List<Result> result;
+    public void addResult(int numberOfGuess){
+        result.add(new Result(numberOfGuess));
+    }
     public void setId(Long id) {
         this.id = id;
     }

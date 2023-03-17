@@ -30,6 +30,10 @@ public class Result {
     public Result() {
     }
 
+    public Result(int result) {
+        this.result = result;
+    }
+
     public Result(Long id, int result) {
         this.id = id;
         this.result = result;
