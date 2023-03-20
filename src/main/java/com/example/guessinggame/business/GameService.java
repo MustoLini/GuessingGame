@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -15,11 +16,34 @@ public class GameService {
     // Should also check if player is inside the database;
     @Autowired
     PersonRepository personRepository;
+    Person playerPerson;
     Random random = new Random();
 
-    public void add(Person person){
-        personRepository.save(person);
+    public List<Person> getAll() {
+        return personRepository.findAll();
     }
+
+    public void add(String name) {
+        List<Person> personList = personRepository.findByName(name);
+        if (personList.size() == 0) {
+            Person person = personRepository.save(new Person(name));
+            playerPerson = person;
+        }
+        else {
+            playerPerson= personList.get(0);
+        }
+    }
+    public String guessHighOrLow(int guees){
+
+        if (guees>secret){
+            return "To Big Number";
+        }
+        else if (guees<secret){
+            return "To Low Number";
+        }
+        return "The Right Number";
+    }
+
     private int secret;
 
     public GameService() {
