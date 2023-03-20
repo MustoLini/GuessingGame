@@ -1,8 +1,7 @@
-package com.example.guessinggame;
+package com.example.guessinggame.business;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,6 +22,28 @@ public class Person {
     }
     public Long getId() {
         return id;
+    }
+
+    public Person() {
+    }
+
+    public Person(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Person(Long id, String name, List<Result> result) {
+        this.id = id;
+        this.name = name;
+        this.result = result;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setResult(List<Result> result) {
+        this.result = result;
     }
 
     public String getName() {
