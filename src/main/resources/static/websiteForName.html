@@ -6,8 +6,8 @@
 </head>
 <body>
 Please Submit a Name: <br/>
-<form th:action="@{/new}" method="post" th:object="${person}">
-    Name: <input type="text" th:field="*{name}" /> </br>
+<form action="/login" method="post" >
+    Name: <input type="text" name="name" /> </br>
     <input type="submit" value="New Person"></b>
 </form>
 </body>
