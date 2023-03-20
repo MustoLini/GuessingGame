@@ -6,11 +6,11 @@
 </head>
 <body>
 Please Enter numbers to check : <br/>
-<form action="guess" method="post">
-  <input type="text" size="8" name="guess" value="0">
+<form action="/guess" method="post">
+  Guess: <input type="guess" size="8" name="guess">
   </b>
   <input name="submit" type="submit" value="Send"></b>
 </form>
-
+<p th:text="${guess}"></p>
 </body>
 </html>
