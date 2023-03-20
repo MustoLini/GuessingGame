@@ -1,5 +1,6 @@
-package com.example.guessinggame;
+package com.example.guessinggame.business;
 
+import com.example.guessinggame.data.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
@@ -16,8 +17,9 @@ public class GameService {
     PersonRepository personRepository;
     Random random = new Random();
 
-    // Should person be here?
-    private Person person;
+    public void add(Person person){
+        personRepository.save(person);
+    }
     private int secret;
 
     public GameService() {
@@ -26,7 +28,6 @@ public class GameService {
 
     private void init() {
         secret = random.nextInt(1, 100);
-        person = new Person();
     }
 
 
