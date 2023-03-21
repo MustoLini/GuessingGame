@@ -2,55 +2,56 @@ package com.example.guessinggame.business;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "personner")
+@Table(name = "person")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name")
     private String name;
-    @OneToMany
-    private List<Result> result;
-    public void addResult(int numberOfGuess){
-        result.add(new Result(numberOfGuess));
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public Long getId() {
-        return id;
-    }
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Result> results;
 
     public Person() {
+
     }
 
     public Person(String name) {
         this.name = name;
+        this.results = new ArrayList<>();
     }
 
-    public Person(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    public Long getId() {
+        return id;
     }
 
-    public Person(Long id, String name, List<Result> result) {
+    public void setId(Long id) {
         this.id = id;
-        this.name = name;
-        this.result = result;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setResult(List<Result> result) {
-        this.result = result;
+    public List<Result> getResults() {
+        return results;
     }
 
-    public String getName() {
-        return name;
+    public void setResults(List<Result> results) {
+        this.results = results;
     }
+
+    public void addResult(Result result) {
+        results.add(result);
+    }
+
+
 }
