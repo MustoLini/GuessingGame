@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -18,40 +19,55 @@ public class GameService {
     PersonRepository personRepository;
     Person playerPerson;
     Random random = new Random();
+    Result result;
+    private int secret;
+
+    public GameService() {
+    }
+
+    public List<PersonDTO> getResult() {
+        return personRepository
+                .findAll()
+                .stream()
+                .map(person -> new PersonDTO(
+                        person.getName(),
+                        person
+                                .getResults()
+                                .stream()
+                                .map(Result::getResult)
+                                .reduce(0, (a, b) -> a + b)*1.0/person.getResults().size()))
+                .toList();
+    }
 
     public List<Person> getAll() {
         return personRepository.findAll();
     }
 
-    public void add(String name) {
-        List<Person> personList = personRepository.findByName(name);
-        if (personList.size() == 0) {
-            Person person = personRepository.save(new Person(name));
-            playerPerson = person;
+    public Person add(String name) {
+        Optional<Person> personOptional = personRepository.findByName(name);
+        if (personOptional.isEmpty()) {
+            playerPerson = personRepository.save(new Person(name));
+        } else {
+            playerPerson = personOptional.get();
         }
-        else {
-            playerPerson= personList.get(0);
-        }
-    }
-    public String guessHighOrLow(int guees){
-
-        if (guees>secret){
-            return "To Big Number";
-        }
-        else if (guees<secret){
-            return "To Low Number";
-        }
-        return "The Right Number";
-    }
-
-    private int secret;
-
-    public GameService() {
-        init();
-    }
-
-    private void init() {
         secret = random.nextInt(1, 100);
+        result = new Result();
+        return playerPerson;
+    }
+
+    public String guessHighOrLow(int guees) {
+
+        if (guees > secret) {
+            System.out.println(result.getAndIncrement() + "Number of guess");
+            return "This number: " + guees + " To Big Number";
+        } else if (guees < secret) {
+            System.out.println(result.getAndIncrement() + "Number of guess");
+            return "This number: " + guees + " To Low Number";
+        }
+        System.out.println(result.getAndIncrement() + "Number of guess");
+        playerPerson.addResult(result);
+        personRepository.save(playerPerson);
+        return "This number: " + guees + " The Right Number";
     }
 
 
