@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -21,13 +22,16 @@ public class GameController {
     @PostMapping("/login")
     public String login(@RequestParam String name, Model model) {
         // Login in method;
-        gameService.add(name);
-        model.addAttribute("person", new Person());
+        model.addAttribute("person", gameService.add(name));
+        return "redirect:/guess";
+    }
+    @GetMapping("/guess")
+    public String guessView(Model model){
         return "guessWebsite";
     }
     @PostMapping("/guess")
     public String guessLowOrHigh(@RequestParam int guess, Model model){
-        String guessText =gameService.guessHighOrLow(guess);
+        String guessText = gameService.guessHighOrLow(guess);
         model.addAttribute("guess", guessText);
         return "guessWebsite";
     }
@@ -38,6 +42,12 @@ public class GameController {
         model.addAttribute("person", new Person());
         return "guessWebsite";
     }
+    @GetMapping("/result")
+    String getResult(Model model){
+        model.addAttribute("results", gameService.getResult());
+        return "showAverageAndTries";
+    }
+
     @PostMapping ("/all")
     String getAll(Model model){
         model.addAttribute("gueesList", gameService.getAll());
