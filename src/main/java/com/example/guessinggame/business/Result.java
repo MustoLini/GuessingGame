@@ -1,42 +1,31 @@
 package com.example.guessinggame.business;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "result")
 public class Result {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Integer result;
 
-    private int result;
-    public int getResult() {
-        return result;
-    }
-
-    public void setResult(int result) {
-        this.result = result;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public Result() {
+        this.result = 0;
     }
 
     public Long getId() {
         return id;
     }
-    public Result() {
+
+    public Integer getResult() {
+        return result;
     }
 
-    public Result(int result) {
+    public void setResult(Integer result) {
         this.result = result;
     }
-
-    public Result(Long id, int result) {
-        this.id = id;
-        this.result = result;
+    public int getAndIncrement(){
+        return ++result;
     }
 }
