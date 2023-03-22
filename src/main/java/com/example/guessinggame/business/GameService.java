@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -35,7 +36,8 @@ public class GameService {
                                 .getResults()
                                 .stream()
                                 .map(Result::getResult)
-                                .reduce(0, (a, b) -> a + b)*1.0/person.getResults().size()))
+                                .reduce(0, Integer::sum)*1.0/person.getResults().size()))
+                                .sorted(Comparator.naturalOrder())
                 .toList();
     }
 
