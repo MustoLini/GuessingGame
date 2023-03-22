@@ -25,31 +25,27 @@ public class GameController {
         model.addAttribute("person", gameService.add(name));
         return "redirect:/guess";
     }
+
     @GetMapping("/guess")
-    public String guessView(Model model){
+    public String guessView(Model model) {
         return "guessWebsite";
     }
+
     @PostMapping("/guess")
-    public String guessLowOrHigh(@RequestParam int guess, Model model){
+    public String guessLowOrHigh(@RequestParam int guess, Model model) {
         String guessText = gameService.guessHighOrLow(guess);
         model.addAttribute("guess", guessText);
         return "guessWebsite";
     }
 
-
-    @GetMapping("/login")
-    public String addLogin(Model model){
-        model.addAttribute("person", new Person());
-        return "guessWebsite";
-    }
     @GetMapping("/result")
-    String getResult(Model model){
+    String getResult(Model model) {
         model.addAttribute("results", gameService.getResult());
         return "showAverageAndTries";
     }
 
-    @PostMapping ("/all")
-    String getAll(Model model){
+    @PostMapping("/all")
+    String getAll(Model model) {
         model.addAttribute("gueesList", gameService.getAll());
         return "showAverageAndTries";
     }

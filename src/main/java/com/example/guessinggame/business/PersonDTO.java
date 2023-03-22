@@ -19,7 +19,7 @@ public class PersonDTO implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        PersonDTO personDTO=(PersonDTO) o;
+        PersonDTO personDTO = (PersonDTO) o;
         return Double.compare(this.averageResult, personDTO.averageResult);
     }
 }

@@ -25,7 +25,8 @@ public class Result {
     public void setResult(Integer result) {
         this.result = result;
     }
-    public int getAndIncrement(){
+
+    public int getAndIncrement() {
         return ++result;
     }
 }

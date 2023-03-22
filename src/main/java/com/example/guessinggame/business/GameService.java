@@ -36,8 +36,8 @@ public class GameService {
                                 .getResults()
                                 .stream()
                                 .map(Result::getResult)
-                                .reduce(0, Integer::sum)*1.0/person.getResults().size()))
-                                .sorted(Comparator.naturalOrder())
+                                .reduce(0, Integer::sum) * 1.0 / person.getResults().size()))
+                .sorted(Comparator.naturalOrder())
                 .toList();
     }
 
